@@ -2,11 +2,11 @@
 Call function does 4 things, it will setup, build, test, deploy
 It will ingest a build parameter that will configure the workflow
 */
-def call() {
+def call(buildConfig) {
     // Setup
-    setup()
+    setup(buildConfig)
     // Build
-    build()
+    build(buildConfig)
     // Test
     test()
     // Scan
