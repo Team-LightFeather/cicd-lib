@@ -4,10 +4,11 @@ def call(buildConfig) {
         def system = buildConfig.system.toLowerCase()
         if (system == "java") {
             sh "echo \'Building Java System...\'"
-            docker(
+            withDocker(
                 buildConfig: buildConfig,
                 registry: "gradle:jdk17-alpine"
-            ) {
+            )
+            {
                 data -> run(data)
             }
         }
