@@ -10,24 +10,19 @@
  * @param body
  * @return
  */
-def call(Map args, Closure body) {
-    if(args.containsKey("githubCredsId")) {
-        withCredentials([gitUsernamePassword(credentialsId: args.githubCredsId, gitToolName: 'git-tool')]) {
-            withDockerContainer(image: args.nodeImage, args: "-e HOME=${args.nodeHome}") {
-                try {
-                    sh "echo registry=https://npm.pkg.github.com >> .npmrc"
-                    sh "echo //npm.pkg.github.com/:_authToken=${env.GIT_PASSWORD} >> .npmrc"
-
-                    body()
-                } finally {
-                    sh 'rm ./.npmrc'
-                }
-            }
-        }
-    } else {
-        withDockerContainer(image: args.nodeImage, args: "-e HOME=${args.nodeHome}") {
-            body()
-        }
+def call(Map args) {
+    docker(
+        credentialId: "test"
+    ) {
+        data -> run()
     }
+}
 
+def run() {
+    try {
+        sh "echo registry=https://npm.pkg.github.com >> .npmrc"
+        sh "echo //npm.pkg.github.com/:_authToken=${env.GIT_PASSWORD} >> .npmrc"
+    } finally {
+        sh 'rm ./.npmrc'
+    }
 }
