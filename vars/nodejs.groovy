@@ -14,11 +14,11 @@ def call(Map args) {
     docker(
         credentialId: "test"
     ) {
-        data -> run()
+        data -> run(data)
     }
 }
 
-def run() {
+def run(data) {
     try {
         sh "echo registry=https://npm.pkg.github.com >> .npmrc"
         sh "echo //npm.pkg.github.com/:_authToken=${env.GIT_PASSWORD} >> .npmrc"
