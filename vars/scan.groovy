@@ -1,4 +1,4 @@
-def call() {
+def call(buildConfig) {
     stage("Scan") {
         sh "echo \'Beginning Scan Process...\'"
     }
