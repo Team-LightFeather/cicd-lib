@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.serviceName }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "chart.labels" . | nindent 8 }}
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      nodeSelector:
+        karpenter.sh/provisioner-name: default
+      containers:
+      - name: {{ .Values.serviceName }} 
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          requests:
+            cpu: {{ .Values.container.cpu }}
+            memory: {{ .Values.container.memory }}
+        ports:
+        - containerPort: {{ .Values.container.port }}
+        env:
+        - name: VAULT_ADDR
+          value: {{ .Values.eks.vaultAddr }}
+        - name: VAULT_TOKEN
+          value: {{ .Values.eks.vaultToken }}
+        - name: spring_profiles_active
+          value: {{ .Values.container.profile }}
+        - name: SPLUNK_HOST
+          value: {{ .Values.splunk.host }}
+        - name: SPLUNK_URL
+          value: {{ .Values.splunk.url }}
+        - name: SPLUNK_TOKEN
+          value: {{ .Values.splunk.token }}
+        - name: SPLUNK_INDEX
+          value: {{ .Values.splunk.index }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.container.healthCheck }}
+            port: {{ .Values.container.port }}
+            scheme: HTTP
+          timeoutSeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.container.healthCheck }}
+            port: {{ .Values.container.port }}
+            scheme: HTTP
+          timeoutSeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: {{ .Values.container.healthCheck }}
+            port: {{ .Values.container.port }}
+            scheme: HTTP
+          timeoutSeconds: 5
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 3
