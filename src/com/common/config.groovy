@@ -1,3 +1,5 @@
-def static environments() {
+package com.common
+
+static def environments() {
     return ["develop", "integration", "production"]
 }
