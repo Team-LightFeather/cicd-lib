@@ -6,7 +6,7 @@ def call(buildConfig) {
     }
 }
 
-def deployStage(buildCOnfig, e) {
+def deployStage(buildConfig, e) {
     stage("Deploy to ${e.capitalize()}") {
         sh "echo \'Starting Deploy Process...\'"
         // This block refers to if a build is suppose to be containerized
