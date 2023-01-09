@@ -1,3 +1,5 @@
+import com.common.awsUtils
+
 /*
 Setup is to define parameters and environment variables
 Additionally it will define process flow of the whole pipeline
@@ -7,7 +9,7 @@ def call(buildConfig) {
     stage('Setup') {
         sh "echo \'Beginning Setup Process...\'"
         def system = buildConfig.system.toLowerCase()
-        env.AWS_DEFAULT_REGION = AwsUtils.getRegion()
+        env.AWS_DEFAULT_REGION = awsUtils.getRegion()
         if (system == "java") {
             env.OUTPUT_DIR = "build/libs"
             env.TEST_REPORT_DIR = ""
