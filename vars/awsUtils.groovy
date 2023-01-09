@@ -19,7 +19,7 @@ def getIdentityDocument() {
 }
 
 def getAccountNumber() {
-    return _curljq("dynamic/instance-identity/document", ".AccountId")
+    return _curljq("dynamic/instance-identity/document", ".accountId")
 }
 
 def getEcrImageUrl(String containerName, String tag) {
