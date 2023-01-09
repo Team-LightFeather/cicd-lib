@@ -1,10 +1,10 @@
 FROM amazoncorretto:17-alpine
 EXPOSE 8080
-RUN mkdir -p /app/conf \
-    && mkdir -p /app/confd
-COPY --from=build /home/gradle/confd /app/confd/confd
-COPY confd /app/confd
-COPY run.sh /app/run.sh
+# RUN mkdir -p /app/conf \
+#     && mkdir -p /app/confd
+# COPY --from=build /home/gradle/confd /app/confd/confd
+# COPY confd /app/confd
+# COPY run.sh /app/run.sh
 USER root
 RUN chmod a+x /app/confd/confd
 RUN chmod a+x /app/run.sh
