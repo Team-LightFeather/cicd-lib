@@ -1,20 +1,21 @@
 import com.common.config
 
 def call(buildConfig) {
-    for (env in config.environments) {
-        deployStage(buildConfig, env)
+    for (e in config.environments) {
+        deployStage(buildConfig, e)
     }
 }
 
-def deployStage(buildCOnfig, env) {
-    stage("Deploy to ${env.capitlize()}") {
-        sh "echo \'Beginning Deploy Process...\'"
+def deployStage(buildCOnfig, e) {
+    stage("Deploy to ${e.capitlize()}") {
+        sh "echo \'Starting Deploy Process...\'"
         // This block refers to if a build is suppose to be containerized
         if (buildConfig.container != null && buildConfig.container.image.length() > 0) {
-            buildToECR(buildConfig)
+            pushToECR(buildConfig)
+            helmDeploy(buildConfig)
         }
-        if (buildConfig.staticWebAssets != null && buildConfig.contai) {
-            buildToS3Bucket(buildConfig)
-        }
+        // if (buildConfig.staticWebAssets != null) {
+        //     buildToS3Bucket(buildConfig)a
+        // }
     }
 }

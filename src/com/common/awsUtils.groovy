@@ -33,4 +33,4 @@ static def getEcrImageUrl(String containerName, String tag) {
 
 static def awsEcrEndpoint() {
     return "${getAccountNumber()}.dkr.ecr.${getRegion()}.amazonaws.com"
-    }
+}
