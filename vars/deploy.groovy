@@ -1,7 +1,7 @@
 import com.common.defaultConfig
 
 def call(buildConfig) {
-    for (e in defaultConfig.environments) {
+    for (e in defaultConfig.environments()) {
         deployStage(buildConfig, e)
     }
 }
