@@ -22,7 +22,7 @@ def buildContainer(buildConfig) {
     }
     sh """
         aws ecr get-login-password --region ${env.AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${awsUtils.awsEcrEndpoint()}
-        docker build . -t ${imageName}
+        docker build . -t ${buildConfig.container.imageName}
     """
 }
 
