@@ -23,7 +23,7 @@ def buildContainer(buildConfig) {
     dir("cicd-lib") {
         git url: 'https://github.com/Team-LightFeather/cicd-lib.git', branch: 'feature/orchestration', credentialsId: 'github'
     }
-    def image = awsUtils.getEcrImageUrl(buildConfig.container.imageName)
+    def image = awsUtils.getEcrImageUrl(buildConfig.container.imageName, null)
     sh """
         aws ecr get-login-password --region ${env.AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${awsUtils.awsEcrEndpoint()}
         docker build . -t ${image} -f ./cicd-lib/docker/Dockerfile.springboot
