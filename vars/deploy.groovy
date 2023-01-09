@@ -7,7 +7,7 @@ def call(buildConfig) {
 }
 
 def deployStage(buildCOnfig, e) {
-    stage("Deploy to ${e.capitlize()}") {
+    stage("Deploy to ${e.capitalize()}") {
         sh "echo \'Starting Deploy Process...\'"
         // This block refers to if a build is suppose to be containerized
         if (buildConfig.container != null && buildConfig.container.image.length() > 0) {
