@@ -4,9 +4,9 @@ EXPOSE 8080
 #     && mkdir -p /app/confd
 # COPY --from=build /home/gradle/confd /app/confd/confd
 # COPY confd /app/confd
-# COPY run.sh /app/run.sh
+COPY run.sh /app/run.sh
 USER root
-RUN chmod a+x /app/confd/confd
+# RUN chmod a+x /app/confd/confd
 RUN chmod a+x /app/run.sh
 USER java
 COPY app/build/libs/springboot-server-0.0.1-SNAPSHOT.jar app.jar
