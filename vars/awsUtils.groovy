@@ -1,5 +1,3 @@
-package com.common
-
 static def _curl(String path) {
     return sh(script: "curl -s http://169.254.169.254/latest/${path}", returnStdout: true).trim()
 }

@@ -1,5 +1,3 @@
-import com.common.awsUtils
-
 /*
 Setup is to define parameters and environment variables
 Additionally it will define process flow of the whole pipeline

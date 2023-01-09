@@ -1,5 +1,3 @@
-import com.common.awsUtils
-
 def call(buildConfig) {
     def imageName = buildConfig.container.imageName
     def buildImageTag = awsUtils.getEcrImageUrl(imageName, env.GIT_COMMIT)
