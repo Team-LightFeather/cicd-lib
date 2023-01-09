@@ -11,7 +11,7 @@ def call(buildConfig) {
     }
 }
 
-def buildContainer(String imageName) {
+def buildContainer(buildConfig) {
     sh "echo \'Building Springboot System...\'"
     withDocker(
         buildConfig: buildConfig,
@@ -30,7 +30,7 @@ def runContainer(data) {
     sh "gradle build"
 }
 
-def buildStatic(String imageName) {
+def buildStatic(buildConfig) {
     sh "echo \'Building ReactJS System\'"
     withDocker(
         buildConfig: buildConfig,
