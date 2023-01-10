@@ -6,6 +6,6 @@ static def environments() {
 
 static def getChartBySystem(system) {
     if (system == "springboot") {
-        return "resources/helm/springboot/chart"
+        return "cicd-lib/resources/helm/springboot/chart"
     }
 }
