@@ -4,6 +4,7 @@ def call(buildConfig) {
     def pushImageTag = awsUtils.getEcrImageUrl(imageName, "latest")
     sh """
         aws ecr get-login-password --region ${env.AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${awsUtils.awsEcrEndpoint()}
+        docker push ${buildImageTag}
         docker tag ${buildImageTag} ${pushImageTag}
         docker push ${pushImageTag}
     """
