@@ -29,20 +29,8 @@ spec:
         ports:
         - containerPort: {{ .Values.container.port }}
         env:
-        - name: VAULT_ADDR
-          value: {{ .Values.eks.vaultAddr }}
-        - name: VAULT_TOKEN
-          value: {{ .Values.eks.vaultToken }}
         - name: spring_profiles_active
           value: {{ .Values.container.profile }}
-        - name: SPLUNK_HOST
-          value: {{ .Values.splunk.host }}
-        - name: SPLUNK_URL
-          value: {{ .Values.splunk.url }}
-        - name: SPLUNK_TOKEN
-          value: {{ .Values.splunk.token }}
-        - name: SPLUNK_INDEX
-          value: {{ .Values.splunk.index }}
         readinessProbe:
           httpGet:
             path: {{ .Values.container.healthCheck }}
