@@ -16,5 +16,11 @@ def call(buildConfig) {
             env.OUTPUT_DIR = "build"
             env.TEST_REPORT_DIR = ""
         }
+        /*
+        This is to import docker and helm and other resources to be used in the pipeline
+        */
+        dir("cicd-lib") {
+            git url: 'https://github.com/Team-LightFeather/cicd-lib.git', branch: 'feature/orchestration', credentialsId: 'github'
+        }
     }
 }

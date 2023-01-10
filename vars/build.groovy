@@ -3,25 +3,22 @@ def call(buildConfig) {
         sh "echo \'Beginning Build Process...\'"
         def system = buildConfig.system.toLowerCase()
         if (system == "springboot") {
-            buildContainer(buildConfig)
+            buildSpringboot(buildConfig)
         }
         if (system == "reactjs") {
-            buildStatic(buildConfig)
+            buildReactJs(buildConfig)
         }
     }
 }
 
-def buildContainer(buildConfig) {
+def buildSpringboot(buildConfig) {
     sh "echo \'Building Springboot System...\'"
     withDocker(
         buildConfig: buildConfig,
         registry: "gradle:jdk17-alpine"
     )
     {
-        data -> runContainer(data)
-    }
-    dir("cicd-lib") {
-        git url: 'https://github.com/Team-LightFeather/cicd-lib.git', branch: 'feature/orchestration', credentialsId: 'github'
+        data -> runSpringbootBuild(data)
     }
     def image = awsUtils.getEcrImageUrl(buildConfig.container.imageName, env.GIT_COMMIT)
     sh """
@@ -30,11 +27,14 @@ def buildContainer(buildConfig) {
     """
 }
 
-def runContainer(data) {
+/*
+This runs a build and will generate a build jar and unit test reports
+*/
+def runSpringbootBuild(data) {
     sh "gradle build"
 }
 
-def buildStatic(buildConfig) {
+def buildReactJs(buildConfig) {
     sh "echo \'Building ReactJS System\'"
     withDocker(
         buildConfig: buildConfig,
