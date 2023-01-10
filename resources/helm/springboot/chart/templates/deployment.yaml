@@ -17,7 +17,7 @@ spec:
         sidecar.istio.io/inject: "true"
     spec:
       nodeSelector:
-        karpenter.sh/provisioner-name: default
+        "kubernetes.io/os": "linux"
       containers:
       - name: {{ .Values.serviceName }} 
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
