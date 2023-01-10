@@ -6,7 +6,8 @@ def call(buildConfig) {
     def imageRepo = awsUtils.getEcrImageUrl(imageName, null)
     def imageTag = env.GIT_COMMIT.trim()
     sh """
-        aws eks update-kubeconfig --name bimms 
+        export KUBECONFIG=~/.kube/config
+        aws eks update-kubeconfig --name bimms
         helm upgrade --install ${imageName} ${chartLocation} \
             --set serviceName=${imageName} \
             --set image.repository=${imageRepo} \
