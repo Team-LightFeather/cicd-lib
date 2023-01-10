@@ -1,7 +1,7 @@
 import com.common.defaultConfig
 
 def call(buildConfig) {
-    def chartLocation = defaultConfig.getChartBySystem(buildConfig.system)
+    def chartLocation = "${WORKSPACE}/${defaultConfig.getChartBySystem(buildConfig.system)}"
     def imageName = buildConfig.container.imageName
     def imageRepo = awsUtils.getEcrImageUrl(imageName, null)
     def imageTag = env.GIT_COMMIT.trim()
