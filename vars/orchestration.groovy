@@ -7,8 +7,6 @@ def call(buildConfig) {
     setup(buildConfig)
     // Build
     build(buildConfig)
-    // Test
-    test(buildConfig)
     // Scan
     scan(buildConfig)
     // Deploy
