@@ -1,8 +1,8 @@
 FROM --platform=linux/amd64 amazoncorretto:17-alpine
 USER 15000
 EXPOSE 8080
-# RUN mkdir -p /app/conf \
-#     && mkdir -p /app/confd
+RUN mkdir -p /app/conf \
+    && mkdir -p /app/confd
 # COPY --from=build /home/gradle/confd /app/confd/confd
 COPY confd /app/confd
 COPY run.sh /app/run.sh
