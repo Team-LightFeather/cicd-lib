@@ -5,12 +5,14 @@ def call(buildConfig) {
     def imageName = buildConfig.container.imageName
     def imageRepo = awsUtils.getEcrImageUrl(imageName, null)
     def imageTag = env.GIT_COMMIT.trim()
+    def port = buildConfig.container.ingress.port
     sh """
         export KUBECONFIG=~/.kube/config
         aws eks update-kubeconfig --name bimms
         helm upgrade --install ${imageName} ${chartLocation} \
             --set serviceName=${imageName} \
             --set image.repository=${imageRepo} \
-            --set image.tag=${imageTag}
+            --set image.tag=${imageTag} \
+            --set container.port.number =${port}
     """
 }
