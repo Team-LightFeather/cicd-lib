@@ -27,14 +27,14 @@ spec:
             cpu: {{ .Values.container.cpu }}
             memory: {{ .Values.container.memory }}
         ports:
-        - containerPort: {{ .Values.container.port }}
+        - containerPort: !!int {{ .Values.container.port }}
         env:
         - name: spring_profiles_active
           value: {{ .Values.container.profile }}
         readinessProbe:
           httpGet:
             path: {{ .Values.container.healthCheck }}
-            port: {{ .Values.container.port }}
+            port: !!int {{ .Values.container.port }}
             scheme: HTTP
           timeoutSeconds: 5
           periodSeconds: 10
@@ -43,7 +43,7 @@ spec:
         livenessProbe:
           httpGet:
             path: {{ .Values.container.healthCheck }}
-            port: {{ .Values.container.port }}
+            port: !!int {{ .Values.container.port }}
             scheme: HTTP
           timeoutSeconds: 5
           periodSeconds: 10
@@ -52,7 +52,7 @@ spec:
         startupProbe:
           httpGet:
             path: {{ .Values.container.healthCheck }}
-            port: {{ .Values.container.port }}
+            port: !!int {{ .Values.container.port }}
             scheme: HTTP
           timeoutSeconds: 5
           periodSeconds: 30
