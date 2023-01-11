@@ -5,7 +5,7 @@ def call(buildConfig) {
     def imageName = buildConfig.container.imageName
     def imageRepo = awsUtils.getEcrImageUrl(imageName, null)
     def imageTag = env.GIT_COMMIT.trim()
-    def port = buildConfig.container.ingress.port
+    def port = buildConfig.container.network.port
     sh """
         export KUBECONFIG=~/.kube/config;
         aws eks update-kubeconfig --name bimms;
@@ -13,6 +13,6 @@ def call(buildConfig) {
             --set serviceName=${imageName} \
             --set image.repository=${imageRepo} \
             --set image.tag=${imageTag} \
-            --set container.port.number=${port};
+            --set container.port=${port};
     """
 }
