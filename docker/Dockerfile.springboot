@@ -1,17 +1,12 @@
-FROM amazoncorretto:17-alpine
-USER root
+FROM --platform=linux/amd64 amazoncorretto:17-alpine
+USER 15000
 EXPOSE 8080
 # RUN mkdir -p /app/conf \
 #     && mkdir -p /app/confd
 # COPY --from=build /home/gradle/confd /app/confd/confd
 # COPY confd /app/confd
 COPY run.sh /app/run.sh
-# RUN chmod a+x /app/confd/confd
+# # RUN chmod a+x /app/confd/confd
 RUN chmod a+x /app/run.sh
-COPY app/build/libs/springboot-server-0.0.1-SNAPSHOT.jar /home/java/app.jar
-RUN groupadd --gid 15555 java \ 
-    && useradd --uid 15555 --gid 15555 -ms /bin/false java\
-    && chown -R java:java /home/java
-USER java
-
+COPY app/build/libs/springboot-server-0.0.1-SNAPSHOT.jar /app.jar
 ENTRYPOINT ["sh", "/app/run.sh"]
