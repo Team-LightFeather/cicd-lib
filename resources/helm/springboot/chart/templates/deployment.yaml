@@ -18,6 +18,8 @@ spec:
     spec:
       nodeSelector:
         "kubernetes.io/os": "linux"
+      securityContext:
+              fsGroup: 15555
       containers:
       - name: {{ .Values.serviceName }} 
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
