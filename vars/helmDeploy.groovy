@@ -7,12 +7,12 @@ def call(buildConfig) {
     def imageTag = env.GIT_COMMIT.trim()
     def port = buildConfig.container.ingress.port
     sh """
-        export KUBECONFIG=~/.kube/config
-        aws eks update-kubeconfig --name bimms
+        export KUBECONFIG=~/.kube/config;
+        aws eks update-kubeconfig --name bimms;
         helm upgrade --install ${imageName} ${chartLocation} \
             --set serviceName=${imageName} \
             --set image.repository=${imageRepo} \
             --set image.tag=${imageTag} \
-            --set container.port.number =${port}
+            --set container.port.number=${port};
     """
 }
