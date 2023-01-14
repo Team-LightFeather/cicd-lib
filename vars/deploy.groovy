@@ -15,7 +15,7 @@ def deployStage(buildConfig, e) {
             helmDeploy(buildConfig, e)
         }
         if (buildConfig.staticWebAssets != null) {
-            buildToS3Bucket(buildConfig)a
+            uploadToS3(buildConfig)
         }
     }
 }
