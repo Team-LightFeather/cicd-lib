@@ -14,8 +14,8 @@ def deployStage(buildConfig, e) {
             pushToECR(buildConfig)
             helmDeploy(buildConfig, e)
         }
-        // if (buildConfig.staticWebAssets != null) {
-        //     buildToS3Bucket(buildConfig)a
-        // }
+        if (buildConfig.staticWebAssets != null) {
+            buildToS3Bucket(buildConfig)a
+        }
     }
 }

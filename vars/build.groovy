@@ -45,5 +45,6 @@ def buildReactJs(buildConfig) {
 }
 
 def runStatic(data) {
-    sh "npm build"
+    sh "npm ci"
+    sh "npm run build"
 }
