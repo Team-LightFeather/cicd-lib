@@ -12,7 +12,7 @@ def deployStage(buildConfig, e) {
         // This block refers to if a build is suppose to be containerized
         if (buildConfig.container != null && buildConfig.container.imageName != null && buildConfig.container.imageName.length() > 0) {
             pushToECR(buildConfig)
-            helmDeploy(buildConfig)
+            helmDeploy(buildConfig, e)
         }
         // if (buildConfig.staticWebAssets != null) {
         //     buildToS3Bucket(buildConfig)a
