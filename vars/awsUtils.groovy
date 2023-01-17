@@ -32,3 +32,18 @@ def getEcrImageUrl(String containerName, String tag) {
 def awsEcrEndpoint() {
     return "${getAccountNumber()}.dkr.ecr.${getRegion()}.amazonaws.com"
 }
+
+def getValueFromParamStore(String value, String region = "us-east-1") {
+    def output = sh(
+        script: """
+            aws ssm get-parameter --name ${value} \
+                --region ${region} --no-paginate \
+                --output text --query "Parameter.Value" 
+        """,
+        returnStdout: true
+    )
+}
+
+def getValueFromSecretStore(String secret) {
+
+}

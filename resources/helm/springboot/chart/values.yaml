@@ -12,6 +12,7 @@ image:
 
 # use the same value as github slug
 serviceName: ""
+domain: ""
 
 # info about the springboot container
 container:
