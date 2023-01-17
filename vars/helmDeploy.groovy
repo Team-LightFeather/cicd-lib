@@ -10,7 +10,7 @@ def call(buildConfig, namespace) {
     def certArn = "arn:aws:acm:eu-west-1:063989428983:certificate/473f2d38-311e-4065-b564-6da01ce08539"
     sh """
         export KUBECONFIG=~/.kube/config;
-        aws eks update-kubeconfig --name bimms;
+        aws eks update-kubeconfig --name bims;
         helm upgrade --install ${imageName} ${chartLocation} \
             --namespace ${namespace} \
             --set serviceName=${imageName} \
