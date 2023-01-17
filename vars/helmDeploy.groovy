@@ -7,7 +7,7 @@ def call(buildConfig, namespace) {
     def imageTag = env.GIT_COMMIT.trim()
     def port = buildConfig.container.network.port
     def domain = "bimms.lightfeathersandbox.com"
-    def certArn = "arn:aws:acm:eu-west-1:063989428983:certificate/473f2d38-311e-4065-b564-6da01ce08539"
+    def certArn = "arn:aws:acm:us-east-2:063989428983:certificate/298bc9b6-a2eb-4184-a646-53426cd46424"
     sh """
         export KUBECONFIG=~/.kube/config;
         aws eks update-kubeconfig --name bims;
