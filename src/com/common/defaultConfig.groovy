@@ -1,7 +1,7 @@
 package com.common
 
 static def environments() {
-    return ["develop", "integration", "production"]
+    return ["dev", "int", "prod"]
 }
 
 static def getChartBySystem(system) {
