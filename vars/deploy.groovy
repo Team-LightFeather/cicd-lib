@@ -8,14 +8,14 @@ def call(buildConfig) {
 
 def deployStage(buildConfig, e) {
     stage("Deploy to ${e.capitalize()}") {
-        sh "echo \'Starting Deploy Process...\'"
+        print("Starting Deploy Process...")
         // This block refers to if a build is suppose to be containerized
         if (buildConfig.container != null && buildConfig.container.imageName != null && buildConfig.container.imageName.length() > 0) {
             pushToECR(buildConfig)
             helmDeploy(buildConfig, e)
         }
         if (buildConfig.staticWebAssets != null) {
-            uploadToS3(buildConfig)
+            uploadToS3(buildConfig, e)
         }
     }
 }
