@@ -20,4 +20,9 @@ def call(buildConfig, namespace) {
             --set eks.certificateArn=${certArn} \
             --set domain=${domain};
     """
+    createCNAMEForIngress(buildConfig, namespace)
+}
+
+def createCNAMEForIngress(buildConfig, namespace) {
+    // kubectl get ingresses --namespace dev -o=jsonpath="{.items[0].status.loadBalancer.ingress[0].hostname}"
 }

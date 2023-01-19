@@ -22,7 +22,6 @@ def buildSpringboot(buildConfig) {
     }
     def image = awsUtils.getEcrImageUrl(buildConfig.container.imageName, env.GIT_COMMIT)
     sh """
-        aws ecr get-login-password --region ${env.AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${awsUtils.awsEcrEndpoint()}
         docker build . -t ${image} -f ./cicd-lib/docker/Dockerfile.springboot
     """
 }
@@ -30,7 +29,7 @@ def buildSpringboot(buildConfig) {
 /*
 This runs a build and will generate a build jar and unit test reports
 */
-def runSpringbootBuild(data) {
+def runSpringbootBuild(data) { 
     sh "gradle build"
 }
 
@@ -47,4 +46,6 @@ def buildReactJs(buildConfig) {
 def runStatic(data) {
     sh "npm ci"
     sh "npm run build"
+    sh "npm run test"
+    // Check if there are failing test, if there are, exit 1
 }
