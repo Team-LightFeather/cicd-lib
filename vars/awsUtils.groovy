@@ -34,7 +34,7 @@ def awsEcrEndpoint() {
 }
 
 def getValueFromParamStore(String value, String region = "us-east-1") {
-    def output = sh(
+    return sh(
         script: """
             aws ssm get-parameter --name ${value} \
                 --region ${region} --no-paginate \
@@ -44,6 +44,17 @@ def getValueFromParamStore(String value, String region = "us-east-1") {
     )
 }
 
-def getValueFromSecretStore(String secret) {
-
+def getValueFromSecretStore(String secret_id, String query = null, String region = "us-east-1") {
+    def output = sh(
+        script: """
+            aws secretsmanager get-secret-value \
+                -- region ${region} --output text \
+                --secret-id ${secret_id} --query "SecretString"
+        """,
+        returnStdout: true
+    )
+    if (query != null) {
+        return "something jq of output"
+    }
+    return output
 }
