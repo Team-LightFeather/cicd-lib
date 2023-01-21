@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.serviceName }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "chart.labels" . | nindent 8 }}
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": "linux"
+      securityContext:
+        fsGroup: 15000
+      containers:
+      - name: {{ .Values.serviceName }} 
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          requests:
+            cpu: {{ .Values.container.cpu }}
+            memory: {{ .Values.container.memory }}
+        ports:
+        - containerPort: !!int {{ .Values.container.port }}
+        env:
+        - name: spring_profiles_active
+          value: {{ .Values.container.profile }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.container.healthCheck }}
+            port: !!int {{ .Values.container.port }}
+            scheme: HTTP
+          timeoutSeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.container.healthCheck }}
+            port: !!int {{ .Values.container.port }}
+            scheme: HTTP
+          timeoutSeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: {{ .Values.container.healthCheck }}
+            port: !!int {{ .Values.container.port }}
+            scheme: HTTP
+          timeoutSeconds: 5
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 3
