@@ -1,6 +1,6 @@
 def call(buildConfig) {
     ecrContainer(buildConfig) {
-        d -> run(buldConfig)
+        d -> run(buildConfig)
     }
 
 }
