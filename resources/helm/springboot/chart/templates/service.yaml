@@ -13,6 +13,7 @@ spec:
     {{- include "chart.selectorLabels" . | nindent 4 }}
   ports:
     - protocol: TCP
-      port: 32122
+      nodePort: 32122
+      port: 80
       targetPort: !!int {{ .Values.container.port }}
   type: LoadBalancer
