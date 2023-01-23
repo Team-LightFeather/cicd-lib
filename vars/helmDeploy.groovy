@@ -5,7 +5,7 @@ def call(buildConfig, namespace) {
     def imageName = buildConfig.container.imageName
     def imageRepo = awsUtils.getEcrImageUrl(imageName, null)
     def imageTag = env.GIT_COMMIT.trim()
-    def port = buildConfig.container.network.port
+    def port = buildConfig.container.config.network.port
     def domain = "bimms.lightfeathersandbox.com"
     def certArn = "arn:aws:acm:us-east-2:063989428983:certificate/298bc9b6-a2eb-4184-a646-53426cd46424"
     sh """
