@@ -12,8 +12,8 @@ spec:
   selector:
     {{- include "chart.selectorLabels" . | nindent 4 }}
   ports:
-    - protocol: TCP
-      nodePort: 32122
-      port: 80
+    - name: microservice-nlb
+      protocol: TCP
+      port: 8080
       targetPort: !!int {{ .Values.container.port }}
   type: LoadBalancer
