@@ -13,5 +13,6 @@ spec:
     {{- include "chart.selectorLabels" . | nindent 4 }}
   ports:
     - protocol: TCP
-      port: !!int {{ .Values.container.port }}
+      port: 32122
+      targetPort: !!int {{ .Values.container.port }}
   type: LoadBalancer
